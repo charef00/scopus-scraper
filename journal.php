@@ -68,12 +68,19 @@ if (isset($_GET['start']))
 		$link = $href->getAttribute('href');
 		$journals_name[]="https://www.scimagojr.com/".$link;
 	}
-
-	print_r($journals_name);
-	
+	echo '<pre>'. print_r($journals_name, true).'</pre>';
+	//the journal name not exist
+	if (empty($journals_name)) 
+	{
+		echo '<hr>There is no new Journal';
+	} else 
+	{
+		$_SESSION['arrNewJournal']	= $journals_name;
+		echo '<script>location.href="chapter.php?new_journal=1";</script>';
+	}
 }
 else
 {
 	echo 'Finished running!';
-	echo '<script>location.href="journal.php?start=1";</script>';
+	
 }

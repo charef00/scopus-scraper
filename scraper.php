@@ -26,7 +26,11 @@ if (isset($_GET['start']))
 	$idom = new DOMDocument();
 	@$idom->loadHTML($html);
 	$ixpath = new DOMXPath($idom);
-		
+	$journal=new Journal($ixpath);
+
+	print_r($journal->name());
+
+	exit();
 	echo $journal_list[0];
     // delete first journal link
 	array_shift($journal_list); 

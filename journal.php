@@ -29,24 +29,26 @@ if (isset($_GET['start']))
 } elseif (isset($_GET['new_journal'])) 
 {
 
-	
+	$journal_list	= $_SESSION['arrNewJournal'];
     //======= get All journal in each page=======//
-	$html = curl($newChap);
+	$html = curl($journal_list[0]);
 	$idom = new DOMDocument();
 	@$idom->loadHTML($html);
 	$ixpath = new DOMXPath($idom);
 		
+	echo $journal_list[0];
+    // delete first journal link
+	array_shift($journal_list); 
+	$_SESSION['arrNewJournal']	= $journal_list;// for link
 
-    // Insert Content and Update List link
-	if (true) 
+	//If the chapter ends, transfer another story
+	if (empty($journal_list)) 
 	{
-       
-	}else
-	{
-	
 		echo '<script>location.href="journal.php";</script>';
-		exit();
-	}
+	} else 
+	{
+		echo '<meta http-equiv="refresh" content="0">';
+	}	
 
 } elseif(isset($_SESSION['link'])) 
 {
@@ -72,11 +74,12 @@ if (isset($_GET['start']))
 	//the journal name not exist
 	if (empty($journals_name)) 
 	{
-		echo '<hr>There is no new Journal';
+		$_SESSION['page']=$_SESSION['page']+1;
+		echo '<script>location.href="journal.php?start=1";</script>';
 	} else 
 	{
 		$_SESSION['arrNewJournal']	= $journals_name;
-		echo '<script>location.href="chapter.php?new_journal=1";</script>';
+		echo '<script>location.href="journal.php?new_journal=1";</script>';
 	}
 }
 else

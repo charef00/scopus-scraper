@@ -7,6 +7,7 @@ session_start();
 ?>
 <?php
 include 'functions.php';
+include 'journal.php';
 
 if (isset($_GET['start'])) 
 {

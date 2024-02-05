@@ -25,3 +25,19 @@ function curl($url)
 	curl_close($ch);
 	return $page;
 }
+
+function getPage()
+{
+	$nbr=1;
+	$myfile = fopen("page.txt", "r") or die("Unable to open file!");
+	$nbr=fread($myfile,filesize("page.txt"));
+	fclose($myfile);
+	return $nbr;
+}
+
+function setPage($nbr)
+{
+	$myfile = fopen("page.txt", "w") or die("Unable to open file!");
+	fwrite($myfile, $nbr);
+	fclose($myfile);
+}

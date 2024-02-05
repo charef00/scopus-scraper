@@ -3,27 +3,17 @@ session_start();
 ?>
 <?php
 // Turn off all error reporting
-error_reporting(0);
+//error_reporting(0);
 ?>
 <?php
 include 'functions.php';
 
 if (isset($_GET['start'])) 
 {
-
-	$page=1;
-	if (isset($_SESSION['page'])) 
-	{
-		$page=$_SESSION['page'];
-	}else
-	{
-		$_SESSION['page']=1;
-	}
-	
+	$page=getPage();
 	$link="https://www.scimagojr.com/journalrank.php?page=".$page."&total_size=27955";
 	$_SESSION['link']	= $link;
-
-		//reload
+	//reload
 	echo '<script>location.href="journal.php";</script>';
 
 } elseif (isset($_GET['new_journal'])) 
@@ -44,7 +34,9 @@ if (isset($_GET['start']))
 	//If the chapter ends, transfer another story
 	if (empty($journal_list)) 
 	{
-		echo '<script>location.href="journal.php";</script>';
+		$nbr=getPage()+1;
+		setPage($nbr);
+		echo '<script>location.href="journal.php?start=1";</script>';
 	} else 
 	{
 		echo '<meta http-equiv="refresh" content="0">';
@@ -74,8 +66,7 @@ if (isset($_GET['start']))
 	//the journal name not exist
 	if (empty($journals_name)) 
 	{
-		$_SESSION['page']=$_SESSION['page']+1;
-		echo '<script>location.href="journal.php?start=1";</script>';
+		echo 'empty list in page '.getPage();
 	} else 
 	{
 		$_SESSION['arrNewJournal']	= $journals_name;
